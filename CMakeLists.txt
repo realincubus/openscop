@@ -21,35 +21,6 @@ set(top_srcdir "${CMAKE_CURRENT_SOURCE_DIR}")
 # User's settings - General C Flags
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -std=c99 -pedantic")
 
-
-# Build doxygen
-	find_package(Doxygen)
-	if(DOXYGEN_FOUND)
-		configure_file("doc/Doxyfile.in" "Doxyfile")
-		add_custom_target(
-			doxygen
-			${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-			WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-			COMMENT "Generating API documentation with Doxygen" VERBATIM
-		)
-	else()
-		message (STATUS "Doxygen not found :( API documentation can not be built")
-	endif()
-
-# Build documentation
-	find_program(texi2pdf_exe texi2pdf)
-	if(texi2pdf_exe)
-		add_custom_target(
-			doc
-			${texi2pdf_exe} ${CMAKE_CURRENT_SOURCE_DIR}/doc/openscop.texi --output=${CMAKE_CURRENT_BINARY_DIR}/openscop.pdf
-			WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-			COMMENT "Generating documentation (pdf) (with texi2pdf)" VERBATIM
-		)
-	else()
-		message (STATUS "texi2pdf not found :( Documentation can not be built")
-	endif()
-
-
 # GMP
 	message(STATUS "---")
 	find_library(gmp_LIB gmp)
